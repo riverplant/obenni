@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>        
+        <!-- META SECTION -->
+        <title>欧博尼后台管理</title>            
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+        
+        <link rel="stylesheet" type="text/css" id="theme" href="css/selfcss.css"/>
+    </head>
+    <body onload="loadData()">
+        <div class="page-container">
+            <div class="page-sidebar" id="page-sidebar">
+ <!-- 菜单 -->  
+            </div>
+            <div class="page-content">
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                    <!-- END TOGGLE NAVIGATION -->
+                   
+                    <!-- END SEARCH -->
+                    <!-- SIGN OUT -->
+                    <li class="xn-icon-button pull-right">
+                        <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
+                    </li> 
+ 
+                </ul>
+                <!-- END X-NAVIGATION VERTICAL -->                     
+
+                <!-- START BREADCRUMB -->
+                <ul class="breadcrumb">
+                    <li><a href="javascript:void(0);">首页</a></li>                    
+                    <li class="active">字典管理</li>
+                </ul>
+                         <!-- START JUSTIFIED TABS -->
+               <div class="panel panel-default tabs" style="margin-top: 0px;">
+                  
+                   <div class="panel-body tab-content">
+                       <div class="tab-pane active" id="tab8">
+                          <!-- START SIMPLE DATATABLE -->
+                            <div id="panel_detail_table" class="panel panel-default">
+                                <div class="panel-heading">       
+                                    <ul class="list-tags">  
+                                    	<li><input type="text"id="searchitem"> <button id="searchPlanCtn" class="btn btn-primary btn-sm" onclick="searchdictions();"><span class="fa fa-search"></span> 查询</button> </li>                                      
+											<li>&nbsp;&nbsp;</li>       
+	<li><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#example" onclick="add_dict()"><span class="fa fa-plus"></span>添加</button></li>
+                                   		<li>&nbsp;&nbsp;</li>       
+     <li><button class="btn btn-danger btn-sm" data-toggle="modal" onclick="delete_function()"><span class="fa fa-times"></span>删除</button></li>
+                                   
+                                    </ul>
+                                </div>
+                                <div class="panel-body">
+                                    <table id="table" class="display" >
+                                     
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- END SIMPLE DATATABLE -->        
+                            
+						</div>	                           
+                       <div class="tab-pane" id="tab9">
+                       
+                       		<!-- START SIMPLE DATATABLE -->
+                            <div id="panel_fileload_table" class="panel panel-default">
+                                <div class="panel-heading">       
+                                    <ul class="list-tags">  
+                                    	<li style="display:none;"><input type="text" class="datepicker" value="2014-08-04"> <button id="f_search_btn" class="btn btn-primary btn-sm"><span class="fa fa-search"></span> 查询</button> </li>                                      
+                                    </ul>
+                                </div>
+                                <div class="panel-body">
+                                    <table  id="table1" class="display" >
+                                        
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- END SIMPLE DATATABLE -->
+                       </div>
+                   </div>
+               </div>                                         
+               <!-- END JUSTIFIED TABS -->
+                                             
+            </div>            
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+
+        <!-- MESSAGE BOX-->
+       <div class="message-box animated fadeIn" id="mb-signout">
+            
+        </div>
+ <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+×
+</button>
+<h4 class="modal-title" id="myModalLabel">
+添加字典
+</h4>
+</div>
+<div class="modal-body" style="min-height:200px;overflow:auto;">
+<div style="width:100%;height:100%;">
+  <form id="form-horizontal">
+   <div class="control-group"style="padding-bottom: 5px;">
+											<label class="form-control-label"for="name_up"><font color="red">*</font>字典名称：</label>
+											<div class="form-controls ">
+												<input type="text" placeholder="字典名称" class="form-control input-lg " name="name" id="name">
+											</div>
+										</div> 
+ <div class="control-group"style="padding-bottom: 5px;">
+											<label class="form-control-label"for="code_up"><font color="red">*</font>字典编码：</label>
+											<div class="form-controls ">
+												<input type="text" placeholder="字典编码" class="form-control input-lg " name="code" id="code">
+											</div>
+										</div>
+										<div class="control-group"style="padding-bottom: 5px;">
+											<label class="form-control-label"for="type_up"><font color="red">*</font>字典类型：</label>
+											<div class="form-controls ">
+												<input type="text" placeholder="字典编码" class="form-control input-lg " name="type" id="type">
+											</div>
+										</div>
+										<div class="control-group"style="padding-bottom: 5px;">
+											<label class="form-control-label"for="sequence_up"><font color="red">*</font>字典排序：</label>
+											<div class="form-controls ">
+												<input type="text" placeholder="字典编码" class="form-control input-lg " name="sequence" id="sequence">
+											</div>
+										</div>
+  <input type="reset"style="display: none;" >
+  </form>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+</button>
+<button type="button" class="btn btn-primary" onclick="adddiction()">
+提交
+</button>
+</div>
+</div>
+</div>
+</div>
+        <!-- END MESSAGE BOX-->
+        
+ <div class="modal fade" id="example_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >
+×
+</button>
+<h4 class="modal-title" id="myModalLabel">
+更新字典
+</h4>
+</div>
+<div class="modal-body" style="min-height:200px;overflow:auto;">
+<div style="width:100%;height:100%;">
+  <form id="form-horizontal_update"> 
+   <div class="control-group"style="padding-bottom: 5px;">
+											<label class="form-control-label"for="name_up"><font color="red">*</font>字典名称：</label>
+											<div class="form-controls ">
+												<input type="text" placeholder="字典名称" class="form-control input-lg " name="name" id="name_up">
+											</div>
+										</div>
+<div class="control-group"style="padding-bottom: 5px;">
+											<label class="form-control-label"for="code_up"><font color="red">*</font>字典编码：</label>
+											<div class="form-controls ">
+												<input type="text" placeholder="字典编码" class="form-control input-lg " name="code" id="code_up">
+											</div>
+										</div>
+										<div class="control-group"style="padding-bottom: 5px;">
+											<label class="form-control-label"for="type_up"><font color="red">*</font>字典类型：</label>
+											<div class="form-controls ">
+												<input type="text" placeholder="字典编码" class="form-control input-lg " name="type" id="type_up"readonly="readonly">
+											</div>
+										</div>
+										<div class="control-group"style="padding-bottom: 5px;">
+											<label class="form-control-label"for="sequence_up"><font color="red">*</font>字典排序：</label>
+											<div class="form-controls ">
+												<input type="text" placeholder="字典编码" class="form-control input-lg " name="sequence" id="sequence_up">
+											</div>
+										</div>
+ <input  id="id_up" name="id" class="form-input" style="display: none;"></input>
+   <input type="reset"style="display: none;" >
+  </form>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+</button>
+<button type="button" class="btn btn-primary" id="tjgg_update">
+提交
+</button>
+</div>
+</div>
+</div>
+</div>
+        <!-- START PRELOADS -->
+
+        <script type="text/javascript" src="selfjs/jquery.min.js"></script>
+        <script type="text/javascript" src="selfjs/jquery-ui.min.js"></script>
+         <script type="text/javascript" src="js/common.js"></script>
+        <script type="text/javascript" src="selfjs/bootstrap.min.js"></script>        
+        <script type='text/javascript' src='selfjs/bootstrap-datepicker.js'></script>  
+          <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>    
+        <script type="text/javascript" src="js/settings.js"></script>          
+        <script type="text/javascript" src="selfjs/plugins.js"></script>        
+        <script type="text/javascript" src="selfjs/actions.js"></script>
+         <script src="selfjs/bootstrap-table.min.js"></script>
+         <script src="js/bootstrap-table-zh-CN.min.js"></script>
+         <script src="selfjs/jquery.mCustomScrollbar.min.js"></script>
+          <script type="text/javascript" src="layer/layer.js"></script>
+         <script type="text/javascript" src="js/diction.js"></script>
+        
+         <script type="text/javascript" src="js/ob_head.js"></script>
+ 
+    </body>
+</html>

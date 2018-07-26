@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>        
+        <!-- META SECTION -->
+        <title>通信团值班联合系统</title>            
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+           <link rel="icon" href="favicon.ico" type="image/x-icon" />
+       <link rel="stylesheet" href="js/zTreeStyle.css" type="text/css">
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+      
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+         <script type="text/javascript" src="js/common.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>   
+       <script type="text/javascript" src="js/jquery.cookie.js"></script>
+      <script type="text/javascript" src="js/jquery.ztree.core.js"></script>
+<!-- <script type="text/javascript" src="js/application.js"></script>        -->
+        <script type="text/javascript" src="js/plugins.js"></script>        
+        <script type="text/javascript" src="js/actions.js"></script>
+<!--  <script src="layer/layer.js"></script> -->
+<!--         <script> -->
+<!--         function loadData(){ -->
+<!--         	$("#example").draggable(); -->
+<!--         } -->
+<!--         </script> -->
+<script type="text/javascript">
+// function getlayer(){
+// 	layer.load(1, {
+// 		  shade: [0.5,'#fff'] //0.1透明度的白色背景
+// 		});
+// }
+
+// function removelayer(){
+// 	layer.closeAll();;
+// }
+var username = $.cookie('username');
+if(username == null) {
+username = "admin";
+}else {
+// $("#uZone").html(' <h3>|  欢迎您:['+username+'] | <a href="javascript:void(0)" onclick="FMG.logOut();"> 注销  </a> |</h3> ');
+}
+var setting = {
+		data: {
+			key: {
+				title:"t"
+			},
+			simpleData: {
+				enable: true
+			}
+		},
+		callback: {
+			beforeClick: beforeClick,
+			onClick: onClick
+		}	
+	};	
+var znode_id = null;
+var znode_name = null;
+var znode_pid = null;
+var znode_code = null;
+var delid=null;
+function beforeClick(treeId, treeNode, clickFlag) {
+	if(znode_id==null){
+		znode_id = treeNode.id;	
+	}
+	if(delid==null){
+		delid = treeNode.id;	
+	}else{
+		delid = null;
+		delid = treeNode.id;
+	}
+	if(znode_name==null){
+		znode_name = treeNode.name;
+	}
+	if(znode_pid==null){
+		znode_pid = treeNode.pid;
+	}
+	if(znode_code==null){
+		znode_code = treeNode.code;
+	}
+	return (treeNode.click != false);
+}
+function onClick(event, treeId, treeNode, clickFlag) {
+	if(znode_id!=null){
+		$("#pid_new").val("");
+		$("#pid_new").val(znode_id);
+		$("#id").val("");
+		$("#id").val(znode_id);
+		znode_id = null;
+	}
+	if(znode_name!=null){
+		$("#editName").val("");
+		$("#editName").val(znode_name);
+		znode_name = null;
+	}
+   if(znode_pid!=null){
+	$("#pid").val("");
+	$("#pid").val(znode_pid);
+	znode_pid = null;
+	}
+if(znode_code!=null){
+	$("#editCode").val("");
+	$("#editCode").val(znode_code);
+	znode_code = null;
+	}
+}	
+
+$(document).ready(function(){
+// 	layer.load(1, {
+// 		  shade: [0.5,'#fff'] //0.1透明度的白色背景
+// 		});
+	 $.ajax({
+         cache: true,
+         type: "POST",
+         url: commurl+"/observice/diction/querdictionsTree.do",
+         async: false,
+        dataType: "json",
+         success : function(msg) {
+						//layer.closeAll();
+						if(msg&&msg.success==true){
+							var zNodes = msg.rows;
+							$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+						}
+					},
+					error : function(data) {
+						console.log("ajax调取错误");
+						//layer.closeAll();
+					}
+       
+     }); 	
+});
+
+function addcomdept(){
+	//getlayer();
+	 $.ajax({
+         cache: true,
+         type: "POST",
+         url: commurl+"/observice/diction/addDiction.do?uid=admin",
+         data:$('#form-horizontal').serialize(),// 你的formid
+         async: false,
+        dataType: "json",
+         success : function(msg) {
+						if(msg&&msg.success==true){
+							alert(msg.result.msg);
+							$('#example').modal('hide');
+						//	removelayer();
+						}else{
+							alert(msg.result.msg);
+							//removelayer();
+						}
+					},
+					error : function(data) {
+						alert(data.result.msg);
+						//removelayer();
+					}
+       
+     }); 
+	 window.location.reload(); 
+}//添加
+
+
+function updatecomdept(){
+	//getlayer();
+	 $.ajax({
+         cache: true,
+         type: "POST",
+         url: commurl+"/observice/diction/updateDiction.do?uid=admin",
+         data:$('#editForm').serialize(),// 你的formid
+         async: false,
+        dataType: "json",
+         success : function(msg) {
+						//layer.closeAll();
+						console.log(msg);
+						if(msg&&msg.success==true){
+							alert(msg.result.msg);
+							$('#example').modal('hide');
+							//removelayer();
+						}else{
+							alert(msg.result.msg);
+							//removelayer();
+						}
+						
+					},
+					error : function(data) {
+						alert(data.result.msg);
+						//removelayer();
+						 
+					}
+       
+     }); 
+	 window.location.reload(); 
+}//修改
+
+function delcomDepartment(){
+	//getlayer();
+	 $.ajax({
+         cache: true,
+         type: "POST",
+         url: commurl+"/observice/diction/delDiction.do?id="+delid+"&uid=admin",
+         async: false,
+        dataType: "json",
+         success : function(msg) {
+        	 console.log(msg);
+						if(msg&&msg.success==true){
+							//removelayer();
+							alert(msg.msg);
+						}else{
+							alert(msg.msg);
+						}	
+					},
+					error : function(data) {
+						alert(data.msg);
+						//removelayer();
+						 
+					}
+       
+     }); 
+	 window.location.reload(); 
+}//删除
+</script>
+
+    </head>
+    <body >
+        <div class="page-container">
+            
+            <div class="page-sidebar">
+               <ul class="x-navigation">
+                                      <li style="background:#e34724;">
+                        <a href="#"><span style="font-size:20px;">欧博尼后台管理</span></a>
+                    </li>
+                    <li>
+                        <a href="jcsj.html"><span class="fa fa-files-o"></span><span class="xn-text">产品管理</span></a>                        
+                    </li>  
+                       <li>
+                        <a href="jcsj.html"><span class="fa fa-files-o"></span> <span class="xn-text">用户管理</span></a>
+                    </li>                  
+                    <li>
+                        <a href="wp.html"><span class="fa fa-files-o"></span> <span class="xn-text">工作计划管理</span></a>
+                    </li>
+                              
+                    <li>
+                        <a href="ipinfo.html"><span class="fa fa-files-o"></span><span class="xn-text">重要通知管理</span></a>
+                    </li>
+                   
+                     <li>
+                        <a href="jcsjbm.html"><span class="fa fa-files-o"></span> <span class="xn-text">数据字典管理</span></a>
+                    </li>                     
+
+                <li class="xn-openable">
+                        <a href="javascript:void(0);"><span class="fa fa-files-o"></span><span class="xn-text">日志管理</span></a>
+                        <ul>                            
+                            <li><a href="jblog.html"><span class="fa fa-files-o"></span> 警报日志管理</a></li>
+                            <li><a href="zbylog.html"><span class="fa fa-files-o"></span>值班员行为日志</a></li>
+                        </ul>
+                    </li>
+                                                     
+                </ul>               
+                    
+             
+                <!-- END X-NAVIGATION -->
+            </div>
+            <!-- END PAGE SIDEBAR -->
+            
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                
+                <!-- START X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                   
+                    <li class="xn-search">
+                        <form role="form">
+                            <input type="text" name="search" placeholder="搜索..."/>
+                        </form>
+                    </li>   
+                 
+                    <li class="xn-icon-button pull-right">
+                        <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
+                    </li> 
+ 
+                </ul>
+                <!-- END X-NAVIGATION VERTICAL -->                     
+
+                <!-- START BREADCRUMB -->
+                <ul class="breadcrumb">
+                    <li><a href="javascript:void(0);">首页</a></li>                    
+                    <li class="active">数据字典管理</li>
+                </ul>
+    <!-- ................................................................................................ -->                    
+    <div class="panel panel-primary" style="top: 20px;font-size: 13px;width: 260px;margin-left: 20px;">
+  <div class="panel-heading"style="background: #3d4e5d;border-color: #2f3c48;color: #ffffff;">
+  <div id="caption"style="float: left;display: inline-block;margin: 0; padding: 0;font-weight: 400;margin-bottom: 7px;font-size: 16px;">
+    <span class="glyphicon glyphicon-user"></span> 数据字典列表</div>
+    <div id="action"style="float: right;display: inline-block;margin: 0; padding: 0;top:-1px;">
+    <button class="btn" type="button"  data-toggle="modal" data-target="#example"style="background-color: #0362fd !important;color: #fff !important;" >新增</button></div> 
+    </div>
+  <div class="panel-body"id="comdeptList_div"style="min-height:600px;overflow:auto;">
+  <ul id="treeDemo" class="ztree"></ul>
+   </div>
+</div>
+    <div class="panel panel-primary" style="top: 20px;font-size: 13px;width: 60%;margin-left: 20px;">
+  <div class="panel-heading"style="background: #3d4e5d;border-color: #2f3c48;color: #ffffff;">
+  <div id="caption"style="float: left;display: inline-block;margin: 0; padding: 0;font-weight: 400;margin-bottom: 7px;font-size: 16px;">
+    <span class="glyphicon glyphicon-user"></span> 字典信息</div>
+  <div id="action"style="float: right;display: inline-block;margin: 0; padding: 0;top:-1px;">    
+    <button class="btn" id="updatecomdeptbtn" style="background-color: #0362fd !important;color: #fff !important;" onclick="updatecomdept()" >保存</button> 
+     <button class="btn"style="background-color: #d84a38 !important;color: #fff !important;margin-left: 5px;" data-toggle="modal" data-target="#deletmodal">删除</button>
+    </div>
+</div>
+  <div class="panel-body"id="comdeptForm">
+  <form action="#" id="editForm" novalidate="novalidate">
+										<input type="hidden" name="id" id="id" >
+										<input type="hidden" id="pid" name="PID">
+										<div class="control-group"style="padding-bottom: 5px;">
+											<label class="form-control-label"for="editCode"><font color="red">*</font>字典代码</label>
+											<div class="form-controls ">
+												<input type="text" placeholder="字典代码" class="form-control input-lg " name="code" id="editCode" readonly="readonly">
+											</div>
+										</div>
+										<div class="control-group"style="padding-bottom: 5px;">
+											<label class="form-control-label"for="editName"><font color="red">*</font>名称</label>
+											<div class="form-controls ">
+												<input name="name" id="editName" type="text" placeholder="字典名称" class="form-control input-lg" required="required">
+											</div>
+										</div>
+									</form>
+   </div>
+</div>                             
+            </div>            
+            <!-- END PAGE CONTENT -->
+            <!-- Modal -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+	<!-- 添加 -->
+        <!-- MESSAGE BOX-->
+        <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
+                    <div class="mb-content">
+                        <p>是否确定要退出系统?</p>                    
+                        <p>选择 否返回.选择是将登出该用户.</p>
+                    </div>
+                    <div class="mb-footer">
+                        <div class="pull-right">
+                            <a href="pages-login.html" class="btn btn-success btn-lg">是</a>
+                            <button class="btn btn-default btn-lg mb-control-close">否</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+<!-- 总是自动关闭 -->
+ <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+×
+</button>
+<h4 class="modal-title" id="myModalLabel">
+添加通讯录部门
+</h4>
+</div>
+<div class="modal-body" style="min-height:200px;overflow:auto;">
+<div style="width:100%;height:100%;">
+  <form id="form-horizontal"> 
+    <div class="row" style="width:100%;height:50px;margin-top:10px;"><label class="form-control-label"for="org_code_name"><font color="red">*</font>字典代码</label><input  id="org_code_name" name="code"  class="form-control input-lg"placeholder="字典代码" required="required"/></div>
+      <div style="width:100%;height:50px;margin-top:10px;"><label class="form-control-label"for="org_name_new"><font color="red">*</font>字典名称</label><input  id="org_name_new" name="name" class="form-control input-lg " placeholder="字典名称" required="required"/></div>
+      <div style="width:100%;height:50px;margin-top:10px;"><label class="form-control-label"for="pid_new">父级代码</label><input  id="pid_new" name="pid" class="form-control input-lg "  readOnly="true"></input></div>
+<!--       <div style="width:100%;height:50px;margin-top:10px;"><label style="text-align:center;min-width:160px;height:30px;">部门简介</label><input  id="description" name="description" style="min-width:200px;height:30px;"></input></div> -->
+  </form>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+<button type="button" class="btn btn-primary" id="tjgg" onclick="addcomdept()">提交</button>
+</div>
+</div>
+</div>
+</div>
+        <!-- END MESSAGE BOX-->
+ <div class="modal fade" id="deletmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+×
+</button>
+<h4 class="modal-title" id="myModalLabel">
+确认信息
+</h4>
+</div>
+<div class="modal-body" style="min-height:200px;overflow:auto;">
+<h3>是否确认删除</h3>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+
+<button type="button" class="btn btn-primary" onclick="delcomDepartment()">确认删除</button>
+</div>
+</div>
+</div>
+</div>
+        <!-- START PRELOADS -->
+      
+    </body>
+</html>
+
+
+
+
+
+

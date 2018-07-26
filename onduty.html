@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>        
+        <!-- META SECTION -->
+        <title>欧博尼后台管理</title>            
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+        <link rel="stylesheet" type="text/css" id="theme" href="css/autocomplete.css"/>
+        <link rel="stylesheet" href="js/demo.css" type="text/css">
+	    <link rel="stylesheet" href="js//zTreeStyle.css" type="text/css">
+<style>
+.slt {
+	display: none ! important;
+}
+
+.fixed-table-body {
+	padding-top: 10px;
+}
+/***表格内的文字居中 start**/
+thead>tr>th {
+	text-align: center;
+}
+
+tbody>tr>td {
+	text-align: center;
+}
+
+.stepContainer {
+	height: 100% ! important;
+}
+
+.modal-dialog {
+	width: 60%;
+}
+
+.wizard .stepContainer,.wizard .actionBar {
+	float: left;
+	width: 100%;
+	margin-top: 30px;
+}
+/***表格内的文字居中 end**/
+</style>
+</head>
+      <body onload="onload1()">
+        <!-- START PAGE CONTAINER -->
+        <div class="page-container">
+            <!-- START PAGE SIDEBAR -->
+            <div class="page-sidebar">
+                <!-- START X-NAVIGATION -->
+                    <ul class="x-navigation">
+                                      <li style="background:#e34724;">
+                        <a href="#"><span style="font-size:20px;">欧博尼后台管理</span></a>
+                    </li>
+                    <li>
+                        <a href="jcsj.html"><span class="fa fa-files-o"></span><span class="xn-text">酒类管理</span></a>                        
+                    </li>  
+                       <li>
+                        <a href="jcsj.html"><span class="fa fa-files-o"></span> <span class="xn-text">酒具类管理</span></a>
+                    </li>                  
+                    <li>
+                        <a href="wp.html"><span class="fa fa-files-o"></span> <span class="xn-text">订单管理</span></a>
+                    </li>
+                              
+                    <li>
+                        <a href="ipinfo.html"><span class="fa fa-files-o"></span><span class="xn-text">用户管理</span></a>
+                    </li>
+                   
+                     <li>
+                        <a href="dictm.html"><span class="fa fa-files-o"></span> <span class="xn-text">数据字典管理</span></a>
+                    </li>  
+                       <li>
+                        <a href="dictm.html"><span class="fa fa-files-o"></span> <span class="xn-text">MSN</span></a>
+                    </li>                     
+
+                <li class="xn-openable">
+                        <a href="javascript:void(0);"><span class="fa fa-files-o"></span><span class="xn-text">文档管理</span></a>
+                        <ul>                            
+                            <li><a href="onduty.html"><span class="fa fa-files-o"></span> 报价单管理</a></li>
+                          
+                        </ul>
+                    </li>
+                                                     
+                </ul> 
+                <!-- END X-NAVIGATION -->
+            </div>
+            <!-- END PAGE SIDEBAR -->
+            
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                
+                <!-- START X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                    <!-- END TOGGLE NAVIGATION -->    
+                        <li class="xn-search">
+                        <form role="form">
+                            <input type="text" name="search" placeholder="Search..."/>
+                        </form>
+                    </li>   
+                    <!-- END SEARCH -->
+                    <!-- SIGN OUT -->
+                    <li class="xn-icon-button pull-right">
+                        <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
+                    </li>                 
+                </ul>
+                <!-- END X-NAVIGATION VERTICAL -->                     
+                
+                <!-- START BREADCRUMB -->
+                <ul class="breadcrumb">
+                    <li><a href="#">首页</a></li>                    
+                    <li class="active">Active</li>
+                </ul>
+                <!-- END BREADCRUMB -->                
+                
+                <div class="page-title">                    
+                    <h2><span class="fa fa-arrow-circle-o-left"></span>报价单管理</h2>
+                </div>                   
+                
+                <!-- PAGE CONTENT WRAPPER -->
+                <div class="page-content-wrap">
+                
+                    <div class="row">
+                        <div class="col-md-12">
+ 
+                            <div class="panel panel-default tabs">
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li class="active"><a href="#tab8" data-toggle="tab">报价单管理</a></li>
+                                    <li ><a href="#tab9" data-toggle="tab">报价单文档管理</a></li>
+                                   
+                                </ul>
+                                <div class="panel-body tab-content">
+                                    <div class="tab-pane active" id="tab8">
+                                    
+                                    
+                                    <div class="page-content-wrap">
+                
+                    
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <!-- START DATATABLE EXPORT -->
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+<!--                                     <table id="customers2" class="table datatable"> -->
+    <div class="btn-group" id="toolbar">
+ 
+                                       <ul class="list-tags" >   
+                                                       <li  id="crop-avatar"><button class="btn btn-success btn-sm avatar-view" data-toggle="modal" id="addmodal" data-target="#example"><span class="fa fa-plus"></span>增加</button></li>
+                                                                           <li>&nbsp;&nbsp;</li>    
+                                                                                  <li> <button class="plan_view btn btn-primary btn-sm" id="ylmodal" data-toggle="modal" data-target="#ylexample"><span class="fa fa-eye"></span> 预览</button></li>   
+                                                                                     <li>&nbsp;&nbsp;</li>   
+                                                                              <li> <button class="plan_edit btn btn-info btn-sm" id="editmodal"  data-toggle="modal" data-target="#example"><span class="fa fa-cogs"></span> 编辑</button></li>   
+                                                                        <li>&nbsp;&nbsp;</li>              
+                                                                                	            		  <li> <button class="file_download btn btn-info btn-sm" tag="402880e959308ac1015930a55f190000"><span class="fa fa-cloud-download"></span> 下载</button></li>       
+                                                                                  <li>&nbsp;&nbsp;</li>   
+                                                  <li>  <button class="plan_delete btn btn-danger btn-sm" id="deletemodal"><span class="fa fa-times"></span> 移除</button>  </li>    
+                                           </ul>                               
+      </div> 
+                                    <table id="customers2" class="table" style="margin-top:10px;">
+ 
+                                        
+                                    </table>                                    
+                                    
+                                </div>
+                            </div>
+                            <!-- END DATATABLE EXPORT -->                            
+                          
+                            <!-- END DEFAULT TABLE EXPORT -->
+
+                        </div>
+                    </div>
+
+                </div>  
+                                                                       
+                                    </div>
+                                    <div class="tab-pane" id="tab9">
+                                    
+                                                              <div class="page-content-wrap">
+                
+                    
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <!-- START DATATABLE EXPORT -->
+                            <div class="panel panel-default">
+                                
+                                <div class="panel-body">
+    <div class="btn-group" id="toolbar1">
+ 
+                                          <ul class="list-tags" >   
+                                                    <li style="display:none;"><button class="btn btn-default"><i class="fa fa-search"></i> 查询</button></li> 
+                                                    <li style="display:none;">&nbsp;&nbsp;</li> 
+                                                   <li style="display:none;"><button class="btn btn-default" data-toggle="modal" data-target="#example1" ><i class="fa fa-plus"></i> 增加</button>  </li>  
+                                                    <li>&nbsp;&nbsp;</li>                                              
+                                                  <li>  <button class="btn btn-default" data-toggle="modal" data-target="#p_detail_add_modal1"><i class="fa fa-times"></i>批量删除</button>   </li>    
+                                           </ul>                                 
+      </div> 
+                                    <table id="customers3" class="table" style="margin-top:10px;">
+ 
+                                        
+                                    </table>                                    
+                                    
+                                </div>
+                            </div>
+                            <!-- END DATATABLE EXPORT -->                            
+                          
+                            <!-- END DEFAULT TABLE EXPORT -->
+
+                        </div>
+                    </div>
+
+                </div>  
+                                           </div>
+                                    <div class="tab-pane" id="tab10">
+                                        <p>Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</p>
+                                    </div>                        
+                                </div>
+                            </div>                                         
+                            <!-- END JUSTIFIED TABS -->
+
+                        </div>
+                    </div>
+                
+                </div>
+                <!-- END PAGE CONTENT WRAPPER -->                
+            </div>            
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+  <!-- 弹出层    start -->
+                <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+×
+</button>
+<h4 class="modal-title" id="myModalLabel">
+添加值班任务
+</h4>
+</div>
+<div class="modal-body" style="overflow:auto;">
+<!-- .wizard .stepContainer, .wizard .actionBar { -->
+<!--     float: left; -->
+<!--     width: 100%; -->
+<!--     /* margin-top: 30px; */ -->
+<!-- } -->
+                                     <form action="javascript:alert('Validated!');" role="form" class="form-horizontal" id="wizard-validation">
+                                <div class="wizard show-submit wizard-validation">
+                                    <ul>
+                                        <li>
+                                            <a href="#step-7">
+                                                <span class="stepNumber">1</span>
+                                                <span class="stepDesc">时间<br /><small>任务起止时间</small></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#step-8">
+                                                <span class="stepNumber">2</span>
+                                                <span class="stepDesc">行政部门<br /><small>行政部门排班</small></span>
+                                            </a>
+                                        </li>  
+                                        <li>
+                                            <a href="#step-9">
+                                                <span class="stepNumber">3</span>
+                                                <span class="stepDesc">技术部门<br /><small>技术部门排班</small></span>
+                                            </a>
+                                        </li>                                   
+                                    </ul>
+
+                                    <div id="step-7" style="height:100px;">   
+
+                             
+                                         <div class="form-group">
+                                            <label class="col-md-2 control-label">开始时间</label>
+                                            <div class="col-md-10">
+                                                <input type="date" class="form-control" name="start" id="start"/>
+                                            </div>
+                                        </div>
+                                          <div class="form-group">
+                                            <label class="col-md-2 control-label"></label>
+                                            <div class="col-md-10">
+                                                <input type="hidden" class="form-control" name="adress" value="时间"/>
+                                            </div>                                        
+                                        </div>  
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">结束时间</label>
+                                            <div class="col-md-10">
+                                                <input type="date" class="form-control" name="end" id="end" onchange="freshPage1(this.value);"/>
+                                            </div>
+                                        </div>    
+
+                                    </div>
+
+                                    <div id="step-8" style="width:100%;">
+  <div class="panel-body">                                                                        
+                                    
+                                    <div class="row">
+                                        
+                                        <div class="col-md-3">
+                                                                                      		                                           <ul id="treeDemo1" class="ztree" style="width:100%;"></ul>    
+
+                                        </div>
+                                        <div class="col-md-9">
+                                                                      <div class="panel panel-default tabs">                
+                                <ul class="nav nav-tabs" role="tablist" id="ul1"> 
+                                        <li class="active"><a href="#tab-first" role="tab" data-toggle="tab" id="a_first5"></a></li>
+                                        <li><a href="#tab-second" role="tab" data-toggle="tab" id="a_second5"></a></li>
+                                        <li><a href="#tab-third" role="tab" data-toggle="tab" id="a_third5"></a></li>
+                                           <li><a href="#tab-four" role="tab" data-toggle="tab" id="a_four5"></a></li>
+                                        <li><a href="#tab-five" role="tab" data-toggle="tab" id="a_five5"></a></li>
+                                           <li><a href="#tab-six" role="tab" data-toggle="tab" id="a_six5"></a></li>
+                                        <li><a href="#tab-seven" role="tab" data-toggle="tab" id="a_seven5"></a></li>
+                                    </ul>
+                                    <div class="panel-body tab-content">
+                                        <div class="tab-pane active" id="tab-first">
+                                           
+                                        </div>
+                                        <div class="tab-pane" id="tab-second">
+                                           
+                                        </div>                                        
+                                        <div class="tab-pane" id="tab-third">
+                                    
+                                        </div>
+                                          <div class="tab-pane" id="tab-four">
+                                    
+                                        </div>
+                                          <div class="tab-pane" id="tab-six">
+                                    
+                                        </div>
+                                          <div class="tab-pane" id="tab-seven">
+                                    
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">                                                                        
+                                        <button class="btn btn-primary pull-right">保存 <span class="fa fa-floppy-o fa-right"></span></button>
+                                    </div>
+                                </div>                                                    
+                                            
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
+ 
+                                    </div>       
+                                    
+                                      <div id="step-9">
+                                               <div class="panel-body">                                                                        
+                                    
+                                    <div class="row">
+                                        
+                                        <div class="col-md-3">
+                                            
+                                           		                                           <ul id="treeDemo" class="ztree" style="width:100%;"></ul>    
+                                        </div>
+                                        <div class="col-md-9">
+                                                                      <div class="panel panel-default tabs">                
+                                       <ul class="nav nav-tabs" role="tablist" id="ul2"> 
+                                        <li class="active"><a href="#tab-first1" role="tab" data-toggle="tab" id="a_first51"></a></li>
+                                        <li><a href="#tab-second1" role="tab" data-toggle="tab" id="a_second51"></a></li>
+                                        <li><a href="#tab-third1" role="tab" data-toggle="tab" id="a_third51"></a></li>
+                                           <li><a href="#tab-four1" role="tab" data-toggle="tab" id="a_four51"></a></li>
+                                        <li><a href="#tab-five1" role="tab" data-toggle="tab" id="a_five51"></a></li>
+                                           <li><a href="#tab-six1" role="tab" data-toggle="tab" id="a_six51"></a></li>
+                                        <li><a href="#tab-seven1" role="tab" data-toggle="tab" id="a_seven51"></a></li>
+                                    </ul>
+                                    <div class="panel-body tab-content">
+                                        <div class="tab-pane active" id="tab-first1">
+                                           
+                                        </div>
+                                        <div class="tab-pane" id="tab-second1">
+                                           
+                                        </div>                                        
+                                        <div class="tab-pane" id="tab-third1">
+                                    
+                                        </div>
+                                          <div class="tab-pane" id="tab-four1">
+                                    
+                                        </div>
+                                          <div class="tab-pane" id="tab-six1">
+                                    
+                                        </div>
+                                          <div class="tab-pane" id="tab-seven1">
+                                    
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">                                                                        
+                                        <button class="btn btn-primary pull-right">保存 <span class="fa fa-floppy-o fa-right"></span></button>
+                                    </div>
+                                </div>                                                    
+                                            
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
+                                                 
+
+                                    </div>                                                                                                        
+                                </div>
+                                </form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+</button>
+<button type="button" class="btn btn-primary" onclick="okfunction()">
+提交更改
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- 预览example -->
+<!-- 预览 -->
+  <div class="modal fade" id="ylexample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+×
+</button>
+<h4 class="modal-title" id="myModalLabel">
+预览
+</h4>
+</div>
+<div class="modal-body" style="overflow:auto;height:500px;">
+                            <table id="ylcl" class="table table-bordered"></table> 
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">确认
+</button>
+</div>
+</div>
+</div>
+</div>
+        <!-- MESSAGE BOX-->
+        <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-sign-out"></span> 退<strong>出</strong> ?</div>
+                    <div class="mb-content">
+                        <p>确定退出?</p>                    
+                    </div>
+                    <div class="mb-footer">
+                        <div class="pull-right">
+                            <a href="pages-login.html" class="btn btn-success btn-lg">确定</a>
+                            <button class="btn btn-default btn-lg mb-control-close">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                 
+        <!-- END PRELOADS -->                      
+
+        <!-- END PRELOADS -->                      
+
+    <!-- START SCRIPTS -->
+        <!-- START PLUGINS -->
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>        
+        <!-- END PLUGINS -->
+        
+        <!-- START THIS PAGE PLUGINS-->        
+        <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+         <script src="js/bootstrap-table.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
+        <script type="text/javascript" src="js/settings.js"></script>
+        
+        <script type="text/javascript" src="js/plugins.js"></script>        
+        <script type="text/javascript" src="js/actions.js"></script>  
+                <script type="text/javascript" src="js/bootstrapExport1.js"></script> 
+                 <script type="text/javascript" src="js/bootstrapExport2.js"></script>   
+                  
+        <script type="text/javascript" src="js/plugins/smartwizard/jquery.smartWizard-2.0.min.js"></script>        
+        
+        <!-- 验证 -->
+         <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>    
+                  <script type='text/javascript' src='js/datetimepicker.min.js'></script>      
+           
+<!--          datetimepicker.min.js   -->
+        <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-select.js'></script>        
+
+        <script type='text/javascript' src='js/plugins/validationengine/languages/jquery.validationEngine-en.js'></script>
+        <script type='text/javascript' src='js/plugins/validationengine/jquery.validationEngine.js'></script>        
+
+        <script type='text/javascript' src='js/plugins/jquery-validation/jquery.validate.js'></script>                
+        <script type="text/javascript" src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+
+        <script type='text/javascript' src='js/plugins/maskedinput/jquery.maskedinput.min.js'></script>
+<!--   bootstrapExport1.js -->
+            <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+      <script type="text/javascript" src="js/fgd.js"></script>
+            <script type="text/javascript" src="js/common.js"></script>
+      	         <script src="js/autocomplete.js"></script>
+      	               <script type="text/javascript" src="js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="js/jquery.ztree.encheck.js"></script>
+      
+    
+        <script>
+        /***********时间备注***************/
+ var datai=0;//时间长度
+ var vg=[];
+ /************************判断一个数组是否包含另一个东西*******************************/
+  function contains(arr, obj) {  
+		    var i = arr.length;  
+		    while (i--) {  
+		        if (arr[i] ==obj) {  
+		            return true;  
+		        }  
+		    }  
+		    return false;  
+		}  
+ /**********计算两个时间点之间的时间********************/
+ function getDays(day1, day2) {  
+		dates=[];
+	    // 获取入参字符串形式日期的Date型日期  
+	    var st = day1.getDate();  
+	    var et = day2.getDate();  
+	      
+	    // 定义返回的数组  
+	    var retArr = [];  
+	  
+	    // 循环，启动日期不等于结束日期时，进行循环  
+	    while (st.getTime() != et.getTime()) {  
+	    	datai=datai+1;
+	        // 将启动日期的字符串形式的日期存放进数组  
+	        retArr.push(st.getYMD());  
+	          
+	        // 取得开始日期的天  
+	        var tempDate = st.getDate();  
+	          
+	        // 将开始日期st指向构造出的新的日期  
+	        // 新的日期较之前的日期多加一天  
+	        st = new Date(st.getFullYear(), st.getMonth(), st.getDate() + 1);  
+	    }  
+	  
+	    // 将结束日期的天放进数组  
+	    retArr.push(et.getYMD());  
+	    dates=retArr; // 或可换为return ret;  
+	    datai=dates.length;
+	    if(datai<=7){
+	    	chosedate=retArr;
+	    }
+	}  
+ /*******************时间格式化*******************/
+ 	// 给Date对象添加getYMD方法，获取字符串形式的年月日  
+	Date.prototype.getYMD = function(){  
+	   var retDate = this.getFullYear() + "-";  // 获取年份。  
+	   retDate += this.getMonth() + 1 + "-";    // 获取月份。            
+	   retDate += this.getDate();               // 获取日。  
+	   return retDate;                          // 返回日期。  
+	}  
+	// 给String对象添加getDate方法，使字符串形式的日期返回为Date型的日期  
+	String.prototype.getDate = function(){  
+	    var strArr = this.split('-');  
+	    var date = new Date(strArr[0], strArr[1] - 1, strArr[2]);  
+	    return date;  
+	}  
+        function freshPage1(val1){
+        	
+        	datai=0;
+    		var val=document.getElementById("start").value; 
+    		getDays(val,val1);
+    		var tti=datai;
+    		 if(tti>7){
+    			 document.getElementById("end").value=""; 
+    			 alert("不好意思，一次最多只能排七天的值班任务");
+    			 return ;
+    		 }else{
+    			 document.getElementById("start").disabled="disabled";
+            	 document.getElementById("end").disabled="disabled";
+    		//	 $("#navul").show();
+//                  var li1=document.getElementById("lifirst");
+//     			 var li2=document.getElementById("lisecond");
+//     			 var li3=document.getElementById("lithird");
+//     			 var li4=document.getElementById("lifour");
+//     			 var li5=document.getElementById("lifive");
+//     			 var li6=document.getElementById("lisix");
+//     			 var li7=document.getElementById("liseven");
+//     			 /****************************************/
+    			 var v1=document.getElementById("a_first5");
+    			 var v2=document.getElementById("a_second5");
+    			 var v3=document.getElementById("a_third5");
+    			 var v4=document.getElementById("a_four5");
+    			 var v5=document.getElementById("a_five5");
+    			 var v6=document.getElementById("a_six5");
+    			 var v7=document.getElementById("a_seven5");
+    			 var v8=document.getElementById("a_first51");
+    			 var v9=document.getElementById("a_second51");
+    			 var v10=document.getElementById("a_third51");
+    			 var v11=document.getElementById("a_four51");
+    			 var v12=document.getElementById("a_five51");
+    			 var v13=document.getElementById("a_six51");
+    			 var v14=document.getElementById("a_seven51");
+//     			 /************************************************/
+//     			  var d1=document.getElementById("first5");
+//     			 var d2=document.getElementById("second5");
+//     			 var d3=document.getElementById("third5");
+//     			 var d4=document.getElementById("four5");
+//     			 var d5=document.getElementById("five5");
+//     			 var d6=document.getElementById("six5");
+//     			 var d7=document.getElementById("seven5");
+    			 /**************************************************/
+    		 
+    			  vg.push({"ahover":v1});
+    			  vg.push({"ahover":v2});
+    			  vg.push({"ahover":v3});
+    			  vg.push({"ahover":v4});
+    			  vg.push({"ahover":v5});
+    			  vg.push({"ahover":v6});
+    			  vg.push({"ahover":v7});
+    			  vg.push({"ahover":v8});
+    			  vg.push({"ahover":v9});
+    			  vg.push({"ahover":v10});
+    			  vg.push({"ahover":v11});
+    			  vg.push({"ahover":v12});
+    			  vg.push({"ahover":v13});
+    			  vg.push({"ahover":v14});
+    			  for(var j=0;j<dates.length;j++){
+//     				  vg[j].ahover.css("display","block");
+    				  vg[j].ahover.innerHTML=dates[j];
+    			  }
+    			
+    	/*************************************************/
+    			 
+    		 }
+    		 
+    			/*****************************************************////conventionSystem/keeperForm/createkeepForm.do
+    	        $.ajax({
+    	                  	        url:"http://127.0.0.1:8080/conventionSystem/keeperForm/createkeepForm.do?emissionDateStart="+val+"&emissionDateEnd="+val1+"&uid=admin",
+    	                  	         async:false,
+    	                  	         success : function(vmsg) { 
+    	                  	        	console.log(vmsg);
+    	                  	        	//创建表单的
+ 
+    	                  	         }
+    	                   })
+  
+        }
+        
+        /***********时间备注****************/
+        function onCheck(e,treeId,treeNode){
+            var treeObj=$.fn.zTree.getZTreeObj("treeDemo"),
+            nodes=treeObj.getCheckedNodes(true),
+            v="";
+            for(var i=0;i<nodes.length;i++){
+            v+=nodes[i].name + ",";
+//                       alert(nodes[i].id); //获取选中节点的值
+                  deptid=nodes[i].id;
+                       //点击相应的部门,表格就显示相应的可值班员
+               	// $("#table_step_9").bootstrapTable('refresh', {url: "http://127.0.0.1:8080/conventionSystem/nouvelle/queryAllNouvelleTypeByFenye.do?searchitem="+encodeURI(encodeURI(v1))});  
+                    }
+            
+            
+            }
+        function onCheck1(e,treeId,treeNode){
+            var treeObj=$.fn.zTree.getZTreeObj("treeDemo1"),
+            nodes=treeObj.getCheckedNodes(true),
+            v="";
+            for(var i=0;i<nodes.length;i++){
+            v+=nodes[i].name + ",";
+//                       alert(nodes[i].id); //获取选中节点的值
+                  deptid=nodes[i].id;
+                       //点击相应的部门,表格就显示相应的可值班员
+               	// $("#table_step_9").bootstrapTable('refresh', {url: "http://127.0.0.1:8080/conventionSystem/nouvelle/queryAllNouvelleTypeByFenye.do?searchitem="+encodeURI(encodeURI(v1))});  
+                    }
+            
+            
+            }         
+  
+		var setting = {
+			check: {
+				enable: true,
+				chkStyle: "radio",
+				radioType: "all"
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			 callback:{
+	                onCheck:onCheck
+	            }
+		};
+		var setting1 = {
+				check: {
+					enable: true,
+					chkStyle: "radio",
+					radioType: "all"
+				},
+				data: {
+					simpleData: {
+						enable: true
+					}
+				},
+				 callback:{
+		                onCheck:onCheck1
+		            }
+			};
+	 
+    	var $table=$('#customers2');
+        $(function(){
+       	 $.ajax({
+	         cache: true,
+	         type: "POST",
+	         url: commurl+"/conventionSystem/department/querDutyTree.do",
+	         async: false,
+	        dataType: "json",
+	         success : function(msg) {
+							if(msg&&msg.success==true){
+								var zNodes = msg.rows;
+								$.fn.zTree.init($("#treeDemo1"), setting1, zNodes);
+							}
+						},
+						error : function(data) {
+							console.log("ajax调取错误");
+						}
+	     }); 
+       	 ///conventionSystem/armyUser/querGdutyeptsTree.do
+      	 $.ajax({
+	         cache: true,
+	         type: "POST",
+	         url: commurl+"/conventionSystem/department/querGdutyeptsTree.do",
+	         ///conventionSystem/department/querGdutyeptsTree.do
+	         async: false,
+	        dataType: "json",
+	         success : function(msg) {
+							if(msg&&msg.success==true){
+								var zNodes = msg.rows;
+								$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+							}
+						},
+						error : function(data) {
+							console.log("ajax调取错误");
+						}
+	     }); 
+        	   $('#customers2').bootstrapTable({
+       	        url:commurl+"/conventionSystem/keeperForm/queryAllKeepFormByFenye.do",//数据源
+       	        dataField: "rows",//服务端返回数据键值 就是说记录放的键值是rows，分页时使用总记录数的键值为total
+//        	       height: tableHeight(),//高度调整
+      	        search: true,//是否搜索
+       	striped:true,
+       	showRefresh: true, 
+       	        pagination: true,//是否分页
+       	        pageSize: 5,//单页记录数
+       	        pageList: [15, 30, 50],//分页步进值
+       	         sidePagination: "server",//服务端分页
+       	     contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
+       	        dataType: "json",//期待返回数据类型
+       	       method: "post",//请求方式
+       	       searchAlign: "right",//查询框对齐方式
+       	        queryParamsType: "limit",//查询参数组织方式
+       	        showToggle:true,
+       	        showPaginationSwitch:true,
+       	        showExport: true,                     //是否显示导出
+                   exportDataType: "basic",              //basic', 'all', 'selected'.
+                   buttonsAlign:"right",
+       	        queryParams:function queryParams(params) {
+       	        	return {
+       	        	rows: params.limit,
+       	        	page: this.pageNumber
+       	        	      };
+       	        	},
+       	       searchOnEnterKey: true,//回车搜索
+       	        buttonsAlign: "right",//按钮对齐方式
+       	        clickToSelect:true,
+       	        toolbar: "#toolbar",//指定工具栏
+       	        toolbarAlign: "left",//工具栏对齐方式
+       	        align:"center",
+       	        columns: [
+       	                  {
+       	                      title: "编号",//标题
+       	                      checkbox:true
+       	                  }  ,
+       	            {
+       	                field: "updateDate",
+       	                title: "值班任务更新日期",
+       	            },
+       	            {
+       	                field: "emissionDateStart",
+       	                title: "值班任务开始日期",
+       	            },
+       	            {
+       	                field: "emissionDateEnd",
+       	                title: "值班任务结束日期",
+       	            },
+       	            {
+       	                field: "creater",
+       	                title: "值班任务创建者",
+       	            },{
+       	            	title:"操作",  
+       	            	formatter:function(value,index){
+                 			  var btn1='<button class="plan_view btn btn-primary btn-sm" data-toggle="modal" data-target="#ylexample"><span class="fa fa-eye"></span> 预览</button>';
+               			  var btn2='&nbsp;<button class="plan_edit btn btn-info btn-sm" data-toggle="modal" data-target="#example"><span class="fa fa-cogs"></span> 编辑</button>';
+               			var btnt='&nbsp;<button class="generate btn btn-warning btn-sm" data-toggle="modal" data-target="#example"><span class="fa fa-book"></span>生成任务表</button>';
+               			  var btn=btn1+btn2+btnt;
+               			  return btn;
+               			  
+               		  }
+       	            }
+       	        ],     
+       	        onClickRow: function(row, $element) {
+       	        	fenyeformid="";
+       	        	fenyeformid=row.formid;
+       	        	dxcyid=row.id;
+       	    console.log(row);
+       	        	
+       	        	
+       	        },//单击row事件
+       	        locale:"zh-CN",//中文支持,
+       	        detailView: false, //是否显示详情折叠
+       	        detailFormatter: function(index, row, element) {
+       	            var html = '';
+       	            $.each(row, function(key, val){
+       	                html += "<p>" + key + ":" + val +  "</p>";
+       	            });
+       	            return html;
+       	        }
+       	    });
+        	 
+        	
+        	   /*******************************添加***********************************/
+           	$("#addmodal").click(function(){
+ 
+           		
+           	});
+        	
+        	   /*******************编辑*********************/
+        	
+        	$("#editmodal").click(function(){
+        	 
+        	});
+        	
+        	
+        	$("#deletemodal").click(function(){
+        		           
+        		 
+        	});
+        	
+
+        })
+        </script>
+    </body>
+</html>

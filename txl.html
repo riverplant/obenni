@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>        
+        <!-- META SECTION -->
+        <title>通信团值班联合系统</title>            
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="js/zTreeStyle.css"/>
+        <link rel="stylesheet" type="text/css" href="css/index1.css"/>
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+<!--<link rel="stylesheet" type="text/css" href="layer/skin/default/layer.css"/> -->
+      <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+       <script type="text/javascript" src="js/jquery.cookie.js"></script>
+      <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script> 
+      <script type="text/javascript" src="js/jquery.ztree.core.js"></script>
+      <script type="text/javascript" src="js/jquery.ztree.exedit.js"></script>
+<script type="text/javascript" src="js/application.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/datetimepicker.min.js"></script>
+<script type='text/javascript' src='js/bootstrap-datepicker.js'></script>                
+ <script type="text/javascript" src="js/plugins.js"></script>        
+ <script type="text/javascript" src="js/actions.js"></script>
+ <script type="text/javascript" src="js/common.js"></script>
+<!--  <script src="layer/layer.js"></script> -->
+  <script src="js/communication.js"></script>
+<!--         <script> -->
+<!--         function loadData(){ -->
+<!--         	$("#example").draggable(); -->
+<!--         } -->
+<!--         </script> -->
+<script type="text/javascript">
+var username = $.cookie('username');
+if(username == null) {
+username = "admin";
+}else {
+	username = "admin";
+// $("#uZone").html(' <h3>|  欢迎您:['+username+'] | <a href="javascript:void(0)" onclick="FMG.logOut();"> 注销  </a> |</h3> ');
+}
+var MoveTest = {
+		errorMsg: "不可以将元素脱离",
+		curTarget: null,
+		curTmpTarget: null,
+		noSel: function() {
+			try {
+				window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+			} catch(e){}
+		},
+		dragTree2Dom: function(treeId, treeNodes) {
+			return !treeNodes[0].isParent;
+		},
+		prevTree: function(treeId, treeNodes, targetNode) {
+			return !targetNode.isParent && targetNode.parentTId == treeNodes[0].parentTId;
+		},
+		nextTree: function(treeId, treeNodes, targetNode) {
+			return !targetNode.isParent && targetNode.parentTId == treeNodes[0].parentTId;
+		},
+		innerTree: function(treeId, treeNodes, targetNode) {
+			return targetNode!=null && targetNode.isParent && targetNode.tId == treeNodes[0].parentTId;
+		},
+		dragMove: function(e, treeId, treeNodes) {
+			var p = null, pId = 'dom_' + treeNodes[0].pId;
+			if (e.target.id == pId) {
+				p = $(e.target);
+			} else {
+				p = $(e.target).parent('#' + pId);
+				if (!p.get(0)) {
+					p = null;
+				}
+			}
+
+			$('.domBtnDiv .active').removeClass('active');
+			if (p) {
+				p.addClass('active');
+			}
+ 		},
+
+		dom2Tree: function(e, treeId, treeNode) {//拖动后
+			//getlayer();
+			var target = MoveTest.curTarget, tmpTarget = MoveTest.curTmpTarget;
+			var tid;var domid;var seq;
+			if (!target) return;
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"), parentNode="";
+			if (treeNode != null && treeNode.isParent ) {
+				parentNode = treeNode;
+			} else if (treeNode != null && !treeNode.isParent ) {
+				parentNode = treeNode.getParentNode();
+			}
+			tid=treeNode.id;
+			domid = target.attr("domId");
+			if (tmpTarget) tmpTarget.remove();
+			if (!!parentNode) {
+				var nodes = zTree.addNodes(parentNode, {id:target.attr("domId"), name: target.text()});
+				zTree.selectNode(nodes[0]);
+				
+				var nos = zTree.getSelectedNodes();
+				if (nos.length>0) {
+					seq = zTree.getNodeIndex(nos[0]);	
+				}
+			} else {
+				target.removeClass("domBtn_Disabled");
+				target.addClass("domBtn");
+			}
+			 $.ajax({
+		         cache: true,
+		         type: "POST",
+		         url: commurl+"/conventionSystem/armyUser/addCommunication.do?dept="+tid+"&id="+domid+"&uid="+username+"&seq="+seq,
+		         async: false,
+		        dataType: "json",
+		         success : function(msg) {
+		        	 console.log(msg);
+							//	layer.closeAll();
+								if(msg&&msg.success==true){
+									
+									alert(msg.msg);
+									
+								}else{
+									alert(msg.msg);
+								}
+								//layer.closeAll();
+							},
+							error : function(data) {
+								console.log("ajax调取错误");
+								//layer.closeAll();
+							}
+		       
+		     }); 
+			MoveTest.updateType();
+			MoveTest.curTarget = null;
+			MoveTest.curTmpTarget = null;
+			 window.location.reload();
+			//zTree.refresh();
+		},
+		updateType: function() {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			nodes = zTree.getNodes();
+			for (var i=0, l=nodes.length; i<l; i++) {
+				var num = nodes[i].children ? nodes[i].children.length : 0;
+				nodes[i].name = nodes[i].name.replace(/ \(.*\)/gi, "");
+				zTree.updateNode(nodes[i]);//更新节点
+			}
+		},
+		bindDom: function() {
+			$(".domBtnDiv").bind("mousedown", MoveTest.bindMouseDown);
+		},
+		bindMouseDown: function(e) {
+			var target = e.target;
+			if (target!=null && target.className=="domBtn") {
+				var doc = $(document), target = $(target),
+				docScrollTop = doc.scrollTop(),
+				docScrollLeft = doc.scrollLeft();
+				target.addClass("domBtn_Disabled");
+				target.removeClass("domBtn");
+				curDom = $("<span class='dom_tmp domBtn'>" + target.text() + "</span>");
+				curDom.appendTo("body");
+
+				curDom.css({
+					"top": (e.clientY + docScrollTop + 3) + "px",
+					"left": (e.clientX + docScrollLeft + 3) + "px"
+				});
+				MoveTest.curTarget = target;
+				MoveTest.curTmpTarget = curDom;
+
+				doc.bind("mousemove", MoveTest.bindMouseMove);
+				doc.bind("mouseup", MoveTest.bindMouseUp);
+				doc.bind("selectstart", MoveTest.docSelect);
+			}
+			if(e.preventDefault) {
+				e.preventDefault();
+			}
+		},
+		bindMouseMove: function(e) {
+			MoveTest.noSel();
+			var doc = $(document), 
+			docScrollTop = doc.scrollTop(),
+			docScrollLeft = doc.scrollLeft(),
+			tmpTarget = MoveTest.curTmpTarget;
+			if (tmpTarget) {
+				tmpTarget.css({
+					"top": (e.clientY + docScrollTop + 3) + "px",
+					"left": (e.clientX + docScrollLeft + 3) + "px"
+				});
+			}
+			return false;
+		},
+		bindMouseUp: function(e) {
+			var doc = $(document);
+			doc.unbind("mousemove", MoveTest.bindMouseMove);
+			doc.unbind("mouseup", MoveTest.bindMouseUp);
+			doc.unbind("selectstart", MoveTest.docSelect);
+
+			var target = MoveTest.curTarget, tmpTarget = MoveTest.curTmpTarget;
+			if (tmpTarget) tmpTarget.remove();
+
+			if ($(e.target).parents("#treeDemo").length == 0) {
+				if (target) {
+					target.removeClass("domBtn_Disabled");
+					target.addClass("domBtn");
+				}
+				MoveTest.curTarget = null;
+				MoveTest.curTmpTarget = null;
+			}
+		},
+		bindSelect: function() {
+			return false;
+		}
+	};
+function zTreeBeforeDrag(treeId, treeNodes) {
+	//alert(treeId);
+    return false;
+};
+function zTreeBeforeRemove(treeId, treeNode) {
+	if(treeNode.drop != "false"){
+		alert("该节点为部门节点，不可以删除");
+		return false;
+	}
+	
+}
+function zTreeBeforeDrop(treeId, treeNodes, targetNode, moveType) {
+	if(targetNode == null || (moveType != "inner" && !targetNode.parentTId)){
+		return false;
+	}else{
+		return true;
+	}
+   
+};
+
+function parseJson(tree){
+	var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+	MoveTest.updateType();
+	var data=[];
+	if(tree==null){
+		return [];
+	}else{
+		for(var i=0;i<tree.length;i++){
+			if(tree[i].drop=="false"){
+				 var obj=new Object();
+				 obj.id = tree[i].comid;
+				 obj.uid = tree[i].id;
+				 obj.name = tree[i].name;
+				 obj.ord = zTree.getNodeIndex(tree[i]);
+				if(tree[i].getParentNode()==null){
+					alert("目标拖入根节点");
+					obj.dept = 1;
+				}else{
+					obj.dept = tree[i].getParentNode().id;
+				}
+				
+				 
+				data.push(obj);
+			}
+			
+		}
+		console.log(data);
+	}
+	return data;
+}
+//目前拖动结果无法保存
+function zTreeOnDrop(event, treeId, treeNodes, targetNode, moveType) {
+	MoveTest.updateType();
+	if(targetNode!=null){
+		var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+		var tree=zTree.getNodes();
+		    var nodes = zTree.transformToArray(tree);
+		var data=[];
+		data = parseJson(nodes);
+		
+		if(data.length>0){
+			 var obj=new Object();
+			 obj.comitems = data;
+			 console.log(obj);
+		 	 $.ajax({
+		 	     cache: true,
+		 	     type: "POST",
+		 	     url: commurl+"/conventionSystem/armyUser/reinitCommunication.do?&uid="+username,
+		 	     async: false,
+		 	    dataType: "json",
+		 	    data:{i:JSON.stringify(obj)},
+		 	     success : function(msg) {
+		 	    	 console.log(msg);
+		 							//layer.closeAll();
+		 							if(msg&&msg.success==true){
+		 							
+		 								alert(msg.msg);
+		 							
+		 							}else{
+		 								alert(msg.msg);
+		 							}
+		 							//layer.closeAll();
+		 						},
+		 						error : function(data) {
+		 							console.log("ajax调取错误");
+// 		 							layer.closeAll();
+		 						}
+		 	   
+		 	 }); 
+		}
+		
+	}
+	 //window.location.reload();
+	MoveTest.updateType();
+	MoveTest.curTarget = null;
+	MoveTest.curTmpTarget = null;
+};
+function zTreeOnRemove(event, treeId, treeNode) {
+	if(treeNode.drop == "false"){
+		 $.ajax({
+	         cache: true,
+	         type: "POST",
+	         url: commurl+"/conventionSystem/armyUser/removeconmunicationPnode.do?uid="+treeNode.id+"&cid="+treeNode.comid+"&username="+username,
+	         async: false,
+	        dataType: "json",
+	         success : function(msg) {
+	        	 console.log(msg);
+							//layer.closeAll();
+							if(msg&&msg.success==true){
+								alert(msg.msg);
+								MoveTest.updateType();
+							}else{
+								alert(msg.msg);
+							}
+							//layer.closeAll();
+						},
+						error : function(data) {
+							console.log("ajax调取错误");
+							//layer.closeAll();
+						}
+	       
+	     }); 
+		// window.location.reload();
+			MoveTest.updateType();
+			MoveTest.curTarget = null;
+			MoveTest.curTmpTarget = null;
+	}else{
+		alert("该节点为部门节点，不可以删除");
+	}	  
+}
+	var setting3 = {
+		edit: {
+			enable: true,
+			showRemoveBtn: true,
+			showRenameBtn: false,
+			drag: {
+				autoExpandTrigger: true, 
+				prev: true,
+				next: true,
+				inner: true
+			}
+		},
+		data: {
+			 
+			keep: {
+				parent: true,
+				leaf: false
+			},
+			simpleData: {
+				enable: true
+			}
+		},
+		callback: {
+			beforeDrop: zTreeBeforeDrop,
+			beforeDrag: MoveTest.dragTree2Dom,
+			//onDrop: MoveTest.dropTree2Dom,
+			onDrop:zTreeOnDrop,
+			onDragMove: MoveTest.dragMove,
+			onMouseUp: MoveTest.dom2Tree,
+			beforeRemove: zTreeBeforeRemove,
+			onRemove: zTreeOnRemove
+		},
+		view: {
+			selectedMulti: false
+		}
+	};
+
+var setting2 = {
+		data: {
+			key: {
+				title:"t"
+			},
+			simpleData: {
+				enable: true
+			}
+		},
+		edit: {
+            enable: false,
+            editNameSelectAll: false,
+            showRemoveBtn: false,//节点不显示参数按钮
+            showRenameBtn: false,//节点不显示编辑按钮
+            removeTitle: "删除",
+            renameTitle: "编辑",
+            drag: {
+            prev: false,//允许向上拖动
+            next: false,//不允许向下拖动
+            inner: false//允许当前层次内进行拖动
+            }
+        },
+		callback: {
+			beforeClick: beforeClick,
+			onClick: onClick
+		}	
+	};
+var znode_id = null;
+function beforeClick(treeId, treeNode, clickFlag) {
+	if(znode_id==null){
+		znode_id = treeNode.id;	
+	}
+	return (treeNode.click != false);
+}
+function onClick(event, treeId, treeNode, clickFlag) {
+// 	layer.load(1, {
+// 		  shade: [0.5,'#fff'] //0.1透明度的白色背景
+// 		});
+	if(znode_id!=null){
+		 $.ajax({
+	         cache: true,
+	         type: "POST",
+	         url: commurl+"/conventionSystem/armyUser/queryUsersByDept.do?dept="+znode_id,
+	         async: false,
+	        dataType: "json",
+	         success : function(msg) {
+	        	 console.log(msg);
+							//layer.closeAll();
+							if(msg&&msg.success==true){
+								var zNodes = msg.rows;
+								$("#dom_1").empty();
+							if(zNodes!=null && zNodes.length>0){
+								for(var i =0;i<zNodes.length;i++){
+									
+									if(zNodes[i].com_org_id!=null && zNodes[i].com_org_id!=""){
+										$("#dom_1").append("<span class='domBtn domBtn_Disabled' domId="+zNodes[i].id+">"+zNodes[i].name+"</span>");
+										
+									}else{
+										$("#dom_1").append("<span class='domBtn' domId="+zNodes[i].id+">"+zNodes[i].name+"</span>");	
+									}	
+								}
+							}
+							}else{
+								alert(msg.msg);
+							}
+							//layer.closeAll();
+						},
+						error : function(data) {
+							console.log("ajax调取错误");
+							//layer.closeAll();
+						}
+	       
+	     }); 
+		znode_id = null;
+	}	
+}
+
+$(document).ready(function(){
+// 	layer.load(1, {
+// 		  shade: [0.5,'#fff'] //0.1透明度的白色背景
+// 		});
+	 $.ajax({
+         cache: true,
+         type: "POST",
+         url: commurl+"/conventionSystem/armyUser/queryCommunicationTree4manage.do",
+         async: false,
+        dataType: "json",
+         success : function(msg) {
+        	 console.log(msg);
+						//layer.closeAll();
+						if(msg&&msg.success==true){
+							var zNodes = msg.rows;	
+							$.fn.zTree.init($("#treeDemo"), setting3, zNodes);
+							MoveTest.updateType();
+							MoveTest.bindDom();
+						}
+						//layer.closeAll();
+					},
+					error : function(data) {
+						console.log("ajax调取错误");
+						//layer.closeAll();
+					}
+       
+     }); 
+	 $.ajax({
+         cache: true,
+         type: "POST",
+         url: commurl+"/conventionSystem/armyUser/querDeptsTree.do",
+         async: false,
+        dataType: "json",
+         success : function(msg) {
+						//layer.closeAll();
+						if(msg&&msg.success==true){
+							var zNodes2 = msg.rows;
+							$.fn.zTree.init($("#treedeptDemo"), setting2, zNodes2);
+						}
+					},
+					error : function(data) {
+						console.log("ajax调取错误");
+						//layer.closeAll();
+					}
+       
+     }); 	
+	 //layer.closeAll();
+});
+
+</script>
+
+    </head>
+    <body >
+        <div class="page-container">
+            
+            <div class="page-sidebar">
+                <ul class="x-navigation">
+                                    <li style="background:#e34724;">
+<!--                         <a href="javascript:void(0);">通信团联合值班管理系统 -->
+<!--                         </a> -->
+                        <a href="#"><span style="font-size:20px;">通信团联合值班系统</span></a>
+                    </li>
+                    <li>
+                        <a href="onduty.html"><span class="fa fa-files-o"></span><span class="xn-text">值班任务管理</span></a>                        
+                    </li>  
+                       <li class="active">
+                        <a href="txl.html"><span class="fa fa-files-o"></span> <span class="xn-text">通讯录管理</span></a>
+                    </li>                  
+                    <li>
+                        <a href="wp.html"><span class="fa fa-files-o"></span> <span class="xn-text">工作计划管理</span></a>
+                    </li>
+                    <li class="xn-openable">
+                        <a href="javascript:void(0);"><span class="fa fa-files-o"></span><span class="xn-text">车辆运行管理</span></a>                        
+                        <ul>
+                            <li><a href="bdc.html"><span class="fa fa-files-o"></span> 车辆管理</a></li>                            
+                            <li><a href="pcgl.html"><span class="fa fa-files-o"></span>派车管理</a></li>                            
+                        </ul>
+                    </li>                    
+                    <li>
+                        <a href="ipinfo.html"><span class="fa fa-files-o"></span><span class="xn-text">重要通知管理</span></a>
+                    </li>
+                    <li class="xn-openable">
+                        <a href="javascript:void(0);"><span class="fa fa-files-o"></span><span class="xn-text">基础数据管理</span></a>
+                        <ul>                            
+                            <li ><a href="jcsj.html"><span class="fa fa-files-o"></span> 人员管理</a></li>
+                            <li ><a href="jcsjbm.html"><span class="fa fa-files-o"></span>通讯录部门管理</a></li>
+                            <li ><a href="jcsjkbm.html"><span class="fa fa-files-o"></span>行政干部值班点管理</a></li>
+                            <li ><a href="jcsjkgbm.html"><span class="fa fa-files-o"></span>技术干部(骨干)值班点管理</a></li>
+                        </ul>
+                    </li>
+<!--                     <li> -->
+<!--                         <a href="zd.html"><span class="fa fa-files-o"></span> <span class="xn-text">字典管理</span></a> -->
+<!--                     </li>                     -->
+<!--                         <a href="logs.html"><span class="fa fa-files-o"></span><span class="xn-text">日志管理</span></a> -->
+                <li class="xn-openable">
+                        <a href="javascript:void(0);"><span class="fa fa-files-o"></span><span class="xn-text">日志管理</span></a>
+                        <ul>                            
+                            <li><a href="jblog.html"><span class="fa fa-files-o"></span> 警报日志管理</a></li>
+                            <li><a href="zbylog.html"><span class="fa fa-files-o"></span>值班员行为日志</a></li>
+                        </ul>
+                    </li>                    
+                    
+                </ul>
+                <!-- END X-NAVIGATION -->
+            </div>
+            <!-- END PAGE SIDEBAR -->
+            
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                
+                <!-- START X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                   
+                    <li class="xn-search">
+                        <form role="form">
+                            <input type="text" name="search" placeholder="搜索..."/>
+                        </form>
+                    </li>   
+                 
+                    <li class="xn-icon-button pull-right">
+                        <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
+                    </li> 
+ 
+                </ul>
+                <!-- END X-NAVIGATION VERTICAL -->                     
+
+                <!-- START BREADCRUMB -->
+                <ul class="breadcrumb">
+                    <li><a href="javascript:void(0);">首页</a></li>                    
+<!--                     <li class="active">通讯录管理</li> -->
+                </ul>
+    <!-- ................................................................................................ -->                    
+    <div class="panel panel-primary" style="top: 16px;font-size: 13px;width: 18%;margin-left: 20px;">
+  <div class="panel-heading"style="background: #3d4e5d;border-color: #2f3c48;color: #ffffff;">
+  <div id="caption"style="float: left;display: inline-block;margin: 0; padding: 0;font-weight: 400;margin-bottom: 7px;font-size: 16px;">
+    <span class="glyphicon glyphicon-user"></span> 通讯录机构列表</div>
+   
+    </div>
+  <div class="panel-body"id="comdeptList_div"style="height:600px;overflow:auto;">
+  <ul id="treeDemo" class="ztree"></ul>
+   </div>
+</div>
+    <div class="panel panel-primary" style="top: 16px;font-size: 13px;width: 56%;margin-left: 2.5%;">
+  <div class="panel-heading"style="background: #3d4e5d;border-color: #2f3c48;color: #ffffff;">
+  <div id="caption"style="float: left;display: inline-block;margin: 0; padding: 0;font-weight: 400;margin-bottom: 7px;font-size: 16px;">
+    <span class="glyphicon glyphicon-user"></span> 机构人员信息</div>
+ 
+</div>
+  <div class="panel-body"id="comdeptForm">
+<div class="domBtnDiv">
+					<div id="dom_1" class="categoryDiv"></div>
+				</div>
+   </div>
+</div>  
+
+    <div class="panel panel-primary" style="top: 16px;font-size: 13px;width: 18%;margin-right: 20px;float: right;">
+  <div class="panel-heading"style="background: #3d4e5d;border-color: #2f3c48;color: #ffffff;">
+  <div id="caption"style="float: left;display: inline-block;margin: 0; padding: 0;font-weight: 400;margin-bottom: 7px;font-size: 16px;">
+    <span class="glyphicon glyphicon-user"></span> 组织机构列表</div>
+    </div>
+  <div class="panel-body"id="comdeptList_div"style="height:600px;overflow:auto;">
+  <ul id="treedeptDemo" class="ztree"></ul>
+   </div>
+</div>                           
+            </div>            
+            <!-- END PAGE CONTENT -->
+            <!-- Modal -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+	<!-- 添加 -->
+        <!-- MESSAGE BOX-->
+        <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
+                    <div class="mb-content">
+                        <p>是否确定要退出系统?</p>                    
+                        <p>Press No if youwant to continue work. Press Yes to logout current user.</p>
+                    </div>
+                    <div class="mb-footer">
+                        <div class="pull-right">
+                            <a href="pages-login.html" class="btn btn-success btn-lg">Yes</a>
+                            <button class="btn btn-default btn-lg mb-control-close">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+        <!-- END MESSAGE BOX-->
+
+        <!-- START PRELOADS -->
+      
+    </body>
+</html>

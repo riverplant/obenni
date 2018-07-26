@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<!-- <html lang="en"> -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- META SECTION -->
+<title>欧博尼后台管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css" />
+<link rel="stylesheet" type="text/css" href="cropper/cropper.min.css" />
+<link rel="stylesheet" type="text/css" href="sitelogo/sitelogo.css" />
+<link rel="stylesheet" href="js/demo.css" type="text/css">
+<link rel="stylesheet" href="js//zTreeStyle.css" type="text/css">
+
+<style>
+.slt {
+	display: none ! important;
+}
+
+.fixed-table-body {
+	padding-top: 10px;
+}
+
+.tabs {
+	margin-top: 0px;
+}
+/***表格内的文字居中 start**/
+thead>tr>th {
+	text-align: center;
+}
+
+tbody>tr>td {
+	text-align: center;
+}
+
+.stepContainer {
+	height: 100% ! important;
+}
+
+.modal-dialog {
+	/*     width: 950px; */
+	margin: 30px auto;
+}
+
+.bs-bars pull-left {
+	width: 950px;
+}
+
+.fixed-table-loading {
+	display: none;
+}
+/***表格内的文字居中 end**/
+</style>
+</head>
+<body onload="onload3()">
+        <!-- START PAGE CONTAINER -->
+        <div class="page-container">
+            
+            <!-- START PAGE SIDEBAR -->
+            <div class="page-sidebar">
+                <!-- START X-NAVIGATION -->
+                <ul class="x-navigation">
+                                      <li style="background:#e34724;">
+                        <a href="#"><span style="font-size:20px;">欧博尼后台管理</span></a>
+                    </li>
+                    <li>
+                        <a href="jcsj.html"><span class="fa fa-files-o"></span><span class="xn-text">酒类管理</span></a>                        
+                    </li>  
+                       <li>
+                        <a href="jcsj.html"><span class="fa fa-files-o"></span> <span class="xn-text">酒具类管理</span></a>
+                    </li>                  
+                    <li>
+                        <a href="wp.html"><span class="fa fa-files-o"></span> <span class="xn-text">订单管理</span></a>
+                    </li>
+                              
+                    <li>
+                        <a href="ipinfo.html"><span class="fa fa-files-o"></span><span class="xn-text">用户管理</span></a>
+                    </li>
+                   
+                     <li>
+                        <a href="dictm.html"><span class="fa fa-files-o"></span> <span class="xn-text">数据字典管理</span></a>
+                    </li>  
+                       <li>
+                        <a href="dictm.html"><span class="fa fa-files-o"></span> <span class="xn-text">MSN</span></a>
+                    </li>                     
+
+                <li class="xn-openable">
+                        <a href="javascript:void(0);"><span class="fa fa-files-o"></span><span class="xn-text">文档管理</span></a>
+                        <ul>                            
+                            <li><a href="onduty.html"><span class="fa fa-files-o"></span> 报价单管理</a></li>
+                          
+                        </ul>
+                    </li>
+                                                     
+                </ul> 
+                <!-- END X-NAVIGATION -->
+            </div>
+            <!-- END PAGE SIDEBAR -->
+            
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                
+                <!-- START X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                    <!-- END TOGGLE NAVIGATION -->    
+                    <!-- SIGN OUT -->
+                    <li class="xn-icon-button pull-right">
+                        <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
+                    </li>                 
+                </ul>
+                <!-- END X-NAVIGATION VERTICAL -->                     
+                
+                <!-- START BREADCRUMB -->
+                <ul class="breadcrumb">
+                    <li><a href="#">首页</a></li>                    
+                    <li class="active">酒类管理</li>
+                </ul>
+                <!-- END BREADCRUMB -->                
+                <!-- PAGE CONTENT WRAPPER -->
+                <div class="page-content-wrap">
+                
+                    <div class="row">
+                        <div class="col-md-12">
+ 
+                            <div class="panel panel-default tabs">
+                              
+                                <div class="panel-body tab-content">
+                                    <div class="tab-pane active" id="tab8">
+           
+                                    <div class="page-content-wrap">
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <!-- START DATATABLE EXPORT -->
+                            <div class="panel panel-default">
+                                 <div class="panel-heading"> 
+                               
+<!--                                     <table id="customers2" class="table datatable"> -->
+    <div class="btn-group" id="toolbar">
+ <ul class="list-tags" >   
+<li> <span style="background:#F5F5F5;border:1px solid #CCC;border-radius:2px;"><input  type="text" id="searchitem" placeholder="搜索">  <button class="btn btn-default" onclick="searchUsers();"><span class="fa fa-search" id="deletemodal1"  style="height:100%;"> </span>查询</button> </span> </li>   
+ <li>&nbsp;&nbsp;</li>
+<li  id="crop-avatar"><button class="btn btn-success btn-sm avatar-view" id="addmodal"><span class="fa fa-plus"></span>增加</button></li>
+                                                                         
+ <li>&nbsp;&nbsp;</li>    
+<li> <button class="plan_view btn btn-primary btn-sm" id="ylmodal" data-toggle="modal" data-target="#ylexample"><span class="fa fa-eye"></span> 预览</button></li>   
+  <li>&nbsp;&nbsp;</li>   
+ <li  id="crop-avatar"> <button class="plan_edit btn btn-info btn-sm avatar-view" id="editmodal"  data-toggle="modal" data-target="#avatar-modal"><span class="fa fa-edit"></span> 编辑</button></li>   
+    <li>&nbsp;&nbsp;</li>        
+  <li><button class="plan_edit btn btn-info btn-sm"  data-toggle="modal" data-target="#example1"  id="xgbtn"><i class="fa fa-pencil"></i>批量修改状态</button>  </li>  
+      <li>&nbsp;&nbsp;</li>              
+      <li>  <button class="plan_delete btn btn-danger btn-sm" id="deletemodal"  data-toggle="modal" data-target="#deletmodalexample"><span class="fa fa-times"></span> 删除</button>  </li> 
+   </ul> 
+      </div> 
+      <script type="text/javascript">
+      function searchUsers(){
+    	 var searchitem = $("#searchitem").val();
+    	 if(searchitem!=null){
+    		 $("#customers2").bootstrapTable('refresh', {url: commurl+"/conventionSystem/armyUser/queryAllUsersByFenye.do?searchitem="+encodeURI(encodeURI(searchitem))});   
+    	 }else{
+    		 $("#customers2").bootstrapTable('refresh', {url: commurl+"/conventionSystem/armyUser/queryAllUsersByFenye.do"});   
+    	 }
+      }
+      
+      </script>
+                                                                   
+                                    
+                                </div>
+                                 <div class="panel-body">
+                                 <table id="customers2" class="table" style="margin-top:10px;">
+ 
+                                        
+                                    </table>   
+                                    </div> 
+                            </div>
+                            <!-- END DATATABLE EXPORT -->                            
+                          
+                            <!-- END DEFAULT TABLE EXPORT -->
+
+                        </div>
+                    </div>
+
+                </div>                                      
+                                    </div>
+                                    <div class="tab-pane" id="tab9">           
+                     <div class="page-content-wrap">
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <!-- START DATATABLE EXPORT -->
+                            <div class="panel panel-default">
+                                
+     <div class="panel-heading">                       
+    <div class="btn-group" id="toolbar1">
+ 
+                                          <ul class="list-tags" >   
+                                                    <li style="display:none;"><button class="btn btn-default"><i class="fa fa-search"></i> 查询</button></li> 
+                                                    <li style="display:none;">&nbsp;&nbsp;</li> 
+                                                   <li style="display:none;"><button class="btn btn-default" data-toggle="modal" data-target="#example1" ><i class="fa fa-plus"></i> 增加</button>  </li>  
+                                                    <li>&nbsp;&nbsp;</li>                                              
+                                                  <li>  <button class="btn btn-default" data-toggle="modal" data-target="#p_detail_add_modal1"><i class="fa fa-times"></i>批量删除</button>   </li>    
+                                           </ul>                                 
+      </div> </div> <!-- panel-heading -->
+      <div class="panel-body">
+                                    <table id="customers3" class="table" data-search="true"  data-pagination="true" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" style="margin-top:10px;">
+ 
+                                        
+                                    </table>                                    
+                                    
+                                </div>
+                            </div>
+                            <!-- END DATATABLE EXPORT -->                            
+                          
+                            <!-- END DEFAULT TABLE EXPORT -->
+
+                        </div>
+                    </div>
+
+                </div>  
+                                           </div>
+                                                      
+                                </div>
+                            </div>                                         
+                            <!-- END JUSTIFIED TABS -->
+
+                        </div>
+                    </div>
+                
+                </div>
+                <!-- END PAGE CONTENT WRAPPER -->                
+            </div>            
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+ <!-- 弹出层    start -->
+        <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
+<div class="modal-dialog" style="width:950px;">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+×
+</button>
+<h4 class="modal-title" id="avatar-modal-label">
+添加人员
+</h4>
+</div>
+<div class="modal-body" style="overflow:auto;">
+<!--                                      <form action="javascript:alert('Validated!');" role="form" class="form-horizontal" id="wizard-validation"> -->
+                                     	<form class="form-horizontal avatar-form"  role="form" id="wizard-validation" enctype="multipart/form-data" method="post">
+                                <div class="wizard show-submit wizard-validation">
+                                    <ul>
+                                        <li>
+                                            <a href="#step-7">
+                                                <span class="stepNumber">1</span>
+                                                <span class="stepDesc">基本信息<br />
+<!--                                                 <small>任务起止时间</small> -->
+                                                </span>
+                                            </a>
+                                        </li>
+                                      
+                                               <li>
+                                            <a href="#step-9">
+                                                <span class="stepNumber">2</span>
+                                                <span class="stepDesc">上传头像<br />
+                                                
+<!--                                                 <small>排班部门</small> -->
+                                                </span>
+                                            </a>
+                                        </li>                          
+                                    </ul>
+
+                                    <div id="step-7" style="width:100%;height:100%;">   
+
+                                      <div class="page-content-wrap">
+                
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <div class="panel panel-default">
+                                
+                           
+                                <div class="panel-body">                                                                        
+                                    
+                                    <div class="row">
+                                        
+                                        <div class="col-md-6">
+                                            
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">姓名</label>
+                                                <div class="col-md-9">                                            
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                        <input type="text" id="name" name="name" class="form-control"/>
+                                                    </div>                                            
+                                                    <span class="help-block">必填</span>
+                                                </div>
+                                            </div>
+                                                <div class="form-group">
+                                                <label class="col-md-3 control-label">用户名</label>
+                                                <div class="col-md-9">                                            
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                        <input type="text" id="user_name" name="user_name" class="form-control"/>
+                                                    </div>                                            
+                                                    <span class="help-block">可填</span>
+                                                </div>
+                                            </div>    <div class="form-group">
+                                                <label class="col-md-3 control-label">证件号</label>
+                                                <div class="col-md-9">                                            
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                        <input type="text" id="idcard" name="idcard" class="form-control"/>
+                                                    </div>                                            
+                                                    <span class="help-block">必填</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">性别</label>
+                                                <div class="col-md-9">                                                                                            
+                                                    <select class="form-control select" id="gender" name="gender">
+                                                        <option value="男">男</option>
+                                                         
+                                                        <option value="女">女</option>
+                                                    </select>
+                                                    <span class="help-block">必选</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">职务</label>
+                                                <div class="col-md-9">                                                                                            
+                                                    <select class="form-control select" id="post" name="post">
+                                                        <option value="职务1">职务1</option>
+                                                         
+                                                        <option value="职务2">职务2</option>
+                                                    </select>
+                                                    <span class="help-block">必选</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">军衔</label>
+                                                <div class="col-md-9">                                                                                            
+                                                    <select class="form-control select" id="rank" name="rank">
+                                                      <option value="中尉1">中尉1</option>
+                                                           <option value="中尉2">中尉2</option>
+                                                      
+                                                    </select>
+                                                    <span class="help-block">必选</span>
+                                                </div>
+                                            </div>
+                                         <div class="form-group">
+                                                <label class="col-md-3 control-label">文化程度</label>
+                                                <div class="col-md-9">                                                                                            
+                                                    <select id="edu_degree" name="edu_degree"  class="form-control select">
+                                                        <option>博士</option>
+				              <option>硕士</option>
+				               <option>本科</option>
+				                <option>高中</option>
+				              <option>初中</option>
+				               <option>小学</option>
+                                                    </select>
+                                                    <span class="help-block">可填</span>
+                                                </div>
+                                            </div>
+                                               <div class="form-group">
+                                                <label class="col-md-3 control-label">驾照类型</label>
+                                                <div class="col-md-9">                                                                                            
+                                                    <select id="drive_type" name="drive_type"  class="form-control select">
+                                                       <option>C1</option>
+				      <option>C2</option>
+				       <option>C3</option>
+				        <option>C4</option>
+                                                    </select>
+                                                    <span class="help-block">必填</span>
+                                                </div>
+                                            </div>
+                                               <div class="form-group">
+                                                <label class="col-md-3 control-label">人员状态</label>
+                                                <div class="col-md-9">                                                                                            
+                                                    <select id="person_status" name="person_status"  class="form-control select">
+<!--                                                      <option>在位</option> -->
+<!-- 				            <option>外勤</option> -->
+                                                    </select>
+                                                    <span class="help-block">必填</span>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-md-6">
+                                            
+                                            <div class="form-group">                                        
+                                                <label class="col-md-3 control-label">出生日期</label>
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="birth" name="birth" class="form-control datepicker" value="2014-11-01">                                            
+                                                    </div>
+                                                    <span class="help-block">必填</span>
+                                                </div>
+                                            </div>
+                                              <div class="form-group">                                        
+                                                <label class="col-md-3 control-label">入伍日期</label>
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="army_year" name="army_year" class="form-control datepicker" value="2014-11-01">                                            
+                                                    </div>
+                                                    <span class="help-block">必填r</span>
+                                                </div>
+                                            </div>
+                                              <div class="form-group">                                        
+                                                <label class="col-md-3 control-label">入党（团）年月</label>
+                                                <div class="col-md-9">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text"  id="party_year" name="party_year" class="form-control datepicker" value="2014-11-01">                                            
+                                                    </div>
+                                                    <span class="help-block">必填</span>
+                                                </div>
+                                            </div>
+                                               <div class="form-group">
+                                                <label class="col-md-3 control-label">籍贯</label>
+                                                <div class="col-md-9">                                            
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                        <input type="text" id="native_place" name="native_place" class="form-control"/>
+                                                    </div>                                            
+                                                    <span class="help-block">必填</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">政治面貌</label>
+                                                <div class="col-md-9">                                                                                            
+                                                    <select class="form-control select" id="political_status" name="political_status">
+                                                        <option>党员</option>
+                                                        <option>团员</option>
+                                                    </select>
+                                                    <span class="help-block">可填</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">民族</label>
+                                                <div class="col-md-9">                                                                                            
+                                                    <select id="nation" name="nation" class="form-control select">
+                                                          <option>苗族</option>
+				          <option>土家族</option>
+				      <option>汉族</option>
+                                                    </select>
+                                                    <span class="help-block">可填</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">专业岗位</label>
+                                                <div class="col-md-9">                                                                                            
+                                                    <select  id="profession_post" name="profession_post"  class="form-control select">
+                                                         <option>通讯</option>
+				  <option>计算机</option>
+				  <option>话务</option>
+                                                    </select>
+                                                    <span class="help-block">可填</span>
+                                                </div>
+                                            </div>
+                                              <div class="form-group">
+                                                <label class="col-md-3 control-label">婚姻状况</label>
+                                                <div class="col-md-9">                                                                                            
+                                                    <select  id="marital_status" name="marital_status" class="form-control select">
+                                                      <option>已婚</option>
+				            <option>未婚</option>
+                                                    </select>
+                                                    <span class="help-block">可填</span>
+                                                </div>
+                                            </div>
+                                              <div class="form-group">
+                                                <label class="col-md-3 control-label">联系方式</label>
+                                                <div class="col-md-9">                                            
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                        <input type="text" id="contact" name="contact"  class="form-control"/>
+                                                    </div>                                            
+                                                    <span class="help-block">必填</span>
+                                                </div>
+                                            </div> 
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                      <div class="row">
+                                                 <div class="col-md-6">
+                                                 
+                                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">家庭住址</label>
+                                                <div class="col-md-9">                                            
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                        <input type="text" id="home_address" name="home_address"  class="form-control"/>
+                                                    </div>                                            
+                                                    <span class="help-block">必填</span>
+                                                </div>
+                                            </div> 
+                                                 </div>
+                                                 <div class="col-md-6">
+                                          
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">备注</label>
+                                                <div class="col-md-9">                                            
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                        <input type="text" id="remark" name="remark" class="form-control"/>
+                                                    </div>                                            
+                                                   
+                                                </div>
+                                            </div> 
+                                          </div>
+                                      </div>
+                                       
+
+                                </div>
+                            
+                            </div>
+                            
+                        </div>
+                    </div>                    
+                    
+                </div>
+                                    </div>
+
+		                                   
+		                                       <div id="step-9">
+		                                                     <div class="avatar-body">  
+  						<div class="avatar-upload">  
+ 							<input class="avatar-src" name="avatar_src" type="hidden">  
+ 							<input class="avatar-data" name="avatar_data" type="hidden"> 
+							<label for="avatarInput">图片上传</label>
+							<input class="avatar-input" id="avatarInput" name="avatar_file" type="file"></div>
+						<div class="row">
+							<div class="col-md-8">
+								<div class="avatar-wrapper"></div>
+							</div>
+							<div class="col-md-4">
+								<div class="avatar-preview preview-lg"></div>
+								<div class="avatar-preview preview-md"></div>
+								<div class="avatar-preview preview-sm"></div>
+							</div>
+						</div>
+						<div class="row avatar-btns">
+							<div class="col-md-8">
+								<div class="btn-group">
+									<button class="btn" data-method="rotate" data-option="-90" type="button" title="Rotate -90 degrees"><i class="fa fa-undo"></i> 向左旋转</button>
+								</div>
+								<div class="btn-group">
+									<button class="btn" data-method="rotate" data-option="90" type="button" title="Rotate 90 degrees"><i class="fa fa-repeat"></i> 向右旋转</button>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<button class="btn btn-success btn-block avatar-save"><i class="fa fa-save"></i> 保存修改</button>
+							</div>
+						</div>
+					</div>
+		                                     
+		                                    </div>       
+                                                                                                                                        
+                                </div>
+                                </form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+</button>
+<button type="button" class="btn btn-primary avatar-save" id="saveperson">
+提交更改
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ylexample -->
+<!-- 弹出层    start -->
+              <div class="modal fade" id="ylexample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+×
+</button>
+<h4 class="modal-title" id="myModalLabel">
+预览
+</h4>
+</div>
+<div class="modal-body" style="overflow:auto;height:500px;">
+                            <table id="ylcl" class="table table-bordered"></table> 
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">确认
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- 批量修改状态 -->
+
+     <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true" >
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+×
+</button>
+<h4 class="modal-title" id="myModalLabel1">
+修改状态
+</h4>
+</div>
+<div class="modal-body" style="overflow:auto;height:300px; ">
+                <div class="panel panel-info" style="height:90%;">
+                <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a href="#accOneColTwo">
+                                                                                            批量修改状态
+                                            </a>
+                                        </h4>
+                                    </div>                                
+                                    <div class="panel-body" id="accOneColTwo">
+<form id="validate" role="form" class="form-horizontal" action="javascript:alert('Form #validate submited');">                            
+                                                                       
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">状态:</label>
+                                        <div class="col-md-3">
+                                            <select class="validate[required] select" id="pst" name="pst">
+                                      
+                                            </select>                           
+<!--                                             <span class="help-block">Required</span> -->
+                                        </div>                        
+                                    </div>
+ 
+                                                                
+                                                                                                  
+                                </form>                                        </div>                                
+                                </div>                   
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+</button>
+<button type="button" class="btn btn-primary" onclick="plxg()">
+提交更改
+</button>
+</div>
+</div>
+</div>
+</div>
+        <!-- MESSAGE BOX-->
+        <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-sign-out"></span> 退<strong>出</strong> ?</div>
+                    <div class="mb-content">
+                        <p>确定退出?</p>                    
+                    </div>
+                    <div class="mb-footer">
+                        <div class="pull-right">
+                            <a href="pages-login.html" class="btn btn-success btn-lg">确定</a>
+                            <button class="btn btn-default btn-lg mb-control-close">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 多选提示 -->
+          <div class="message-box message-box-danger animated fadeIn" data-sound="fail" id="message-box-sound-2">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-times"></span> 选错了!</div>
+                    <div class="mb-content">
+                    只能选一个
+<!--                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at tellus sed mauris mollis pellentesque nec a ligula. Quisque ultricies eleifend lacinia. Nunc luctus quam pretium massa semper tincidunt. Praesent vel mollis eros. Fusce erat arcu, feugiat ac dignissim ac, aliquam sed urna. Maecenas scelerisque molestie justo, ut tempor nunc.</p>                     -->
+                    </div>
+                    <div class="mb-footer">
+                        <button class="btn btn-default btn-lg pull-right mb-control-close">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	<!-- START PLUGINS -->
+	<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/jquery-form.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/bootstrap/bootstrap.min.js"></script>
+	<!-- END PLUGINS -->
+
+	<!-- START THIS PAGE PLUGINS-->
+	<script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+	<script src="js/bootstrap-table.min.js"></script>
+	<!--     <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"></script> -->
+	<script src="js/bootstrap-table-zh-CN.min.js"></script>
+	<script type="text/javascript" src="js/settings.js"></script> 
+	<script type="text/javascript" src="js/plugins.js"></script>
+	<script type="text/javascript" src="js/actions.js"></script>
+	<script type="text/javascript" src="js/bootstrapExport1.js"></script>
+	<script type="text/javascript" src="js/bootstrapExport2.js"></script>
+	<script type="text/javascript" src="js/plugins/smartwizard/jquery.smartWizard-2.0.min.js"></script>
+	<!-- 验证 -->
+	<script type='text/javascript'
+		src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+	<script type='text/javascript'
+		src='js/plugins/bootstrap/bootstrap-select.js'></script>
+	<script type='text/javascript'
+		src='js/plugins/validationengine/languages/jquery.validationEngine-en.js'></script>
+	<script type='text/javascript'
+		src='js/plugins/validationengine/jquery.validationEngine.js'></script>
+	<script type='text/javascript'
+		src='js/plugins/jquery-validation/jquery.validate.js'></script>
+	<script type='text/javascript'
+		src='js/plugins/maskedinput/jquery.maskedinput.min.js'></script>
+	<!--   bootstrapExport1.js -->
+	<script type="text/javascript"
+		src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/bootstrap/bootstrap-datepicker.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/bootstrap/bootstrap-file-input.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/bootstrap/bootstrap-select.js"></script>
+	<script type="text/javascript"
+		src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+	<script type="text/javascript" src="js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="js/jquery.ztree.encheck.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/fgd.js"></script>
+	<script src="cropper/cropper.min.js"></script>
+	<script src="sitelogo/sitelogo.js"></script>
+	<script type="text/javascript" src="js/ob_provin.js"></script>
+
+
+	
+               <!-- 删除框 -->
+ <div class="modal fade" id="deletmodalexample" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+×
+</button>
+<h4 class="modal-title" id="myModalLabel">
+确认信息
+</h4>
+</div>
+<div class="modal-body" style="min-height:200px;overflow:auto;">
+<h3>是否确认删除</h3>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+
+<button type="button" class="btn btn-primary" onclick="deluser()">确认删除</button>
+</div>
+</div>
+</div>
+</div>
+
+    </body>
+</html>
